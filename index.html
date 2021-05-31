@@ -31,7 +31,7 @@
             altitude = position.coords.altitude;
             accuracy = position.coords.accuracy;
             altitudeAccuracy = position.coords.altitudeAccuracy;
-            speed = position.coords.speed;
+            speed = position.coords.speed * 3.28084;
             heading = position.coords.heading;
           x.innerHTML = `<b>Latitude:</b> ` + latitude +
           "<b><br>Longitude:</b> " + longitude +
