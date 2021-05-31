@@ -48,8 +48,9 @@
     let altitudeAccuracy = '';
     let speed = '';
     let heading = '';
+    let time = "";
     let locationHistory = [];
-
+    let log = []
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
@@ -58,9 +59,12 @@
       }
     }
     function showPosition(position) {
-      locationHistory.push(position)
-      console.log(locationHistory)
+
+      
       timestamp = position.timestamp;
+
+      var d = new Date(timestamp);
+      console.log(locationHistory);
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
       altitude = position.coords.altitude;
@@ -69,16 +73,28 @@
       speedMPS = position.coords.speed;
       speedFPS = position.coords.speed * 3.28084;
       heading = position.coords.heading;
+
+
+      locationHistory.push(position)
+      log.push({
+          "timestamp": timestamp,
+          "latitude": latitude,
+          "longitude": longitude,
+          "speed": speed
+      })
       locationHistory.forEach(element =>
-        timed.insertAdjacentHTML('afterEnd',`<tr class="timed">` + 
+
+        
+        timed.insertAdjacentHTML('afterEnd',`<tr class="timestamp" timestamp=` +timestamp+ `">` + 
           `<td class="lat">` + latitude + `</td>
           <td class="long">` + longitude + `</td>
-          <td class="timestamp">` + timestamp + `</td>` +
+          <td class="timestamp" timestamp="` + timestamp + `">` + d.toLocaleString() + `</td>` +
           `</tr>`
         )
       );
-      x.innerHTML = `<b>Latitude:</b> ` + latitude +
-        "<b><br>Longitude:</b> " + longitude +
+      console.log(log)
+      x.innerHTML = `<b>Latitude:</b> ` + Math.round(latitude * 10) / 10 +
+        "<b><br>Longitude:</b> " + Math.round(longitude * 10) / 10 +
         "<b><br>Altitude:</b> " + altitude +
         "<b><br>Accuracy:</b> " + accuracy +
         "<b><br>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
