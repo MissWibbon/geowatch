@@ -20,7 +20,7 @@
         let heading = '';
         function getLocation() {
           if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(showPosition, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+            navigator.geolocation.watchPosition(showPosition);
           } else {
             x.innerHTML = "Geolocation is not supported by this browser.";
           }
@@ -40,7 +40,7 @@
           "<b><br>Speed:</b> " + speed +
           "<b><br>Heading:</b> " + heading;
         }
-        getLocation()
+        getLocation({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true })
         </script>
 </body>
 </html>
