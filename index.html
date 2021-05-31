@@ -1,82 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <div id="demo"></div>
-    <div id="log"></div>
-    <script>
-        var x = document.getElementById("demo");
-        var l = document.getElementById("log");
-        let latitude = '';
-        let longitude = '';
-        let altitude = '';
-        let accuracy = '';
-        let altitudeAccuracy = '';
-        let speed = '';
-        let heading = '';
-        let locationHistory = [];
 
-        function getLocation() {
-          if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(showPosition);
-          } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
-          }
-        }
-        function showPosition(position) {
-          locationHistory.push(position)
-          console.log(locationHistory)
-          locationHistory.forEach(element => 
-            l.append(element.coords.latitude)
-            );
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            altitude = position.coords.altitude;
-            accuracy = position.coords.accuracy;
-            altitudeAccuracy = position.coords.altitudeAccuracy;
-            speedMPS = position.coords.speed;
-            speedFPS = position.coords.speed * 3.28084;
-            heading = position.coords.heading;
-          x.innerHTML = `<b>Latitude:</b> ` + latitude +
-          "<b><br>Longitude:</b> " + longitude +
-          "<b><br>Altitude:</b> " + altitude +
-          "<b><br>Accuracy:</b> " + accuracy +
-          "<b><br>Speed - meters per second:</b> " +  Math.round(speedMPS * 10) / 10 +
-          "<b><br>Speed - feet per second:</b> " + Math.round(speedMPS * 10) / 10 +
-          "<b><br>Heading:</b> " + heading;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEO Watch</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+  <div id="demo"></div>
+  <table id="log">
+    <thead>
+      <tr>
+        <th>Lat</th>
+        <th>Long</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="timed">
+        <td class="lat"></td>
+        <td class="long"></td>
+        <td class="timestamp"></td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    var x = document.getElementById("demo");
+    var l = document.getElementById("log");
+    var timed = document.querySelector('tr')
+    let latitude = '';
+    let longitude = '';
+    let altitude = '';
+    let accuracy = '';
+    let altitudeAccuracy = '';
+    let speed = '';
+    let heading = '';
+    let locationHistory = [];
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+    function showPosition(position) {
+      locationHistory.push(position)
+      console.log(locationHistory)
+      timestamp = position.timestamp;
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      altitude = position.coords.altitude;
+      accuracy = position.coords.accuracy;
+      altitudeAccuracy = position.coords.altitudeAccuracy;
+      speedMPS = position.coords.speed;
+      speedFPS = position.coords.speed * 3.28084;
+      heading = position.coords.heading;
+      locationHistory.forEach(element =>
+        timed.insertAdjacentHTML('afterEnd',`<tr class="timed">` + 
+          `<td class="lat">` + latitude + `</td>
+          <td class="long">` + longitude + `</td>
+          <td class="timestamp">` + timestamp + `</td>` +
+          `</tr>`
+        )
+      );
+      x.innerHTML = `<b>Latitude:</b> ` + latitude +
+        "<b><br>Longitude:</b> " + longitude +
+        "<b><br>Altitude:</b> " + altitude +
+        "<b><br>Accuracy:</b> " + accuracy +
+        "<b><br>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
+        "<b><br>Speed - feet per second:</b> " + Math.round(speedMPS * 10) / 10 +
+        "<b><br>Heading:</b> " + heading;
+    }
 
 
     //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
-    function calcCrow(lat1, lon1, lat2, lon2) 
-    {
+    function calcCrow(lat1, lon1, lat2, lon2) {
       var R = 6371; // km
-      var dLat = toRad(lat2-lat1);
-      var dLon = toRad(lon2-lon1);
+      var dLat = toRad(lat2 - lat1);
+      var dLon = toRad(lon2 - lon1);
       var lat1 = toRad(lat1);
       var lat2 = toRad(lat2);
 
-      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var d = R * c;
       return d;
     }
 
     // Converts numeric degrees to radians
-    function toRad(Value) 
-    {
-        return Value * Math.PI / 180;
+    function toRad(Value) {
+      return Value * Math.PI / 180;
     }
 
 
-        getLocation({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true })
-        </script>
+    getLocation({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true })
+  </script>
 </body>
+
 </html>
