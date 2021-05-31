@@ -26,7 +26,7 @@
             altitude = location.coords.altitude;
             accuracy = location.coords.accuracy;
             altitudeAccuracy = location.coords.altitudeAccuracy;
-            speed = location.coords.speed;
+            speed = location.coords.speed x 3.28084;
             heading = location.coords.heading;
           } else {
             x.innerHTML = "Geolocation is not supported by this browser.";
