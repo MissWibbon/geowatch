@@ -15,8 +15,9 @@
       background-color: rgb(31, 29, 29);
       color:white;
     }
-    tr {border: 1px solid rgb(147, 199, 131)}
-    td {padding: .25rem .5rem;}
+    table {margin: auto;}
+    tr {border: 1px solid #93c783;}
+    td {padding: .25rem .5rem;border: 1px solid #93c783;}
 
   </style>
 
@@ -26,16 +27,9 @@
       <tr>
         <th>Lat</th>
         <th>Long</th>
-        <th>Timestamp</th>
+        <th>Time</th>
       </tr>
     </thead>
-    <tbody>
-      <tr class="timed">
-        <td class="lat"></td>
-        <td class="long"></td>
-        <td class="timestamp"></td>
-      </tr>
-    </tbody>
   </table>
   <script>
     var x = document.getElementById("demo");
@@ -63,7 +57,6 @@
       
       timestamp = position.timestamp;
 
-      var d = new Date(timestamp);
       console.log(locationHistory);
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
@@ -82,17 +75,7 @@
           "longitude": longitude,
           "speed": speed
       })
-      locationHistory.forEach(element =>
 
-        
-        timed.insertAdjacentHTML('afterEnd',`<tr class="timestamp" timestamp=` +timestamp+ `">` + 
-          `<td class="lat">` + latitude + `</td>
-          <td class="long">` + longitude + `</td>
-          <td class="timestamp" timestamp="` + timestamp + `">` + d.toLocaleString() + `</td>` +
-          `</tr>`
-        )
-      );
-      console.log(log)
       x.innerHTML = `<b>Latitude:</b> ` + Math.round(latitude * 10) / 10 +
         "<b><br>Longitude:</b> " + Math.round(longitude * 10) / 10 +
         "<b><br>Altitude:</b> " + altitude +
@@ -100,6 +83,16 @@
         "<b><br>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
         "<b><br>Speed - feet per second:</b> " + Math.round(speedMPS * 10) / 10 +
         "<b><br>Heading:</b> " + heading;
+
+        var d = new Date(timestamp);
+        locationHistory.forEach(element =>
+          timed.insertAdjacentHTML('afterEnd',`<tr class="timestamp" timestamp=` +timestamp+ `">` + 
+          `<td class="lat">` + latitude + `</td>
+          <td class="long">` + longitude + `</td>
+          <td class="timestamp" timestamp="` + timestamp + `">` + d.toLocaleString() + `</td>` +
+          `</tr>`
+        )
+      );
     }
 
 
