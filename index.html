@@ -20,7 +20,7 @@
         let heading = '';
         function getLocation() {
           if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(showPosition);
+            navigator.geolocation.watchPosition(showPosition, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
           } else {
             x.innerHTML = "Geolocation is not supported by this browser.";
           }
