@@ -18,27 +18,27 @@
         let altitudeAccuracy = '';
         let speed = '';
         let heading = '';
-        function getLocation(location) {
+        function getLocation() {
           if (navigator.geolocation) {
             navigator.geolocation.watchPosition(showPosition);
-            latitude = location.coords.latitude;
-            longitude = location.coords.longitude;
-            altitude = location.coords.altitude;
-            accuracy = location.coords.accuracy;
-            altitudeAccuracy = location.coords.altitudeAccuracy;
-            speed = location.coords.speed;
-            heading = location.coords.heading;
           } else {
             x.innerHTML = "Geolocation is not supported by this browser.";
           }
         }
         function showPosition(position) {
-          x.innerHTML = `<b>Latitude:</b> ` + position.coords.latitude +
-          "<b><br>Longitude:</b> " + position.coords.longitude +
-          "<b><br>Altitude:</b> " + position.coords.altitude +
-          "<b><br>Accuracy:</b> " + position.coords.accuracy +
-          "<b><br>Speed:</b> " + position.coords.speed +
-          "<b><br>Heading:</b> " + position.coords.heading;
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            altitude = position.coords.altitude;
+            accuracy = position.coords.accuracy;
+            altitudeAccuracy = position.coords.altitudeAccuracy;
+            speed = position.coords.speed;
+            heading = position.coords.heading;
+          x.innerHTML = `<b>Latitude:</b> ` + latitude +
+          "<b><br>Longitude:</b> " + longitude +
+          "<b><br>Altitude:</b> " + altitude +
+          "<b><br>Accuracy:</b> " + accuracy +
+          "<b><br>Speed:</b> " + speed +
+          "<b><br>Heading:</b> " + heading;
         }
         getLocation()
         </script>
