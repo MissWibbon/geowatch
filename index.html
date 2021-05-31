@@ -31,13 +31,15 @@
             altitude = position.coords.altitude;
             accuracy = position.coords.accuracy;
             altitudeAccuracy = position.coords.altitudeAccuracy;
-            speed = position.coords.speed * 3.28084;
+            speedMPS = position.coords.speed;
+            speedFPS = position.coords.speed * 3.28084;
             heading = position.coords.heading;
           x.innerHTML = `<b>Latitude:</b> ` + latitude +
           "<b><br>Longitude:</b> " + longitude +
           "<b><br>Altitude:</b> " + altitude +
           "<b><br>Accuracy:</b> " + accuracy +
-          "<b><br>Speed:</b> " + speed +
+          "<b><br>Speed Meters per second:</b> " + speedMPS +
+          "<b><br>Speed Feet per second:</b> " + speedFPS +
           "<b><br>Heading:</b> " + heading;
         }
         getLocation({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true })
