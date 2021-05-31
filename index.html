@@ -21,8 +21,8 @@
     table {margin: auto;}
     tr {border: 1px solid #93c783;}
     td {padding: .25rem .5rem;border: 1px solid #93c783;}
-    #demo > div {
-
+    span.date {
+      font-size: 10px;
     }
 
   </style>
@@ -33,6 +33,7 @@
       <tr class="timestamp">
         <th>Lat</th>
         <th>Long</th>
+        <th>Distance</th>
         <th>Time</th>
       </tr>
     </thead>
@@ -50,7 +51,10 @@
     let heading = '';
     let time = "";
     let locationHistory = [];
+    let previousTimestamp = [];
+    let previousLatLong = [];
     let log = []
+    let coordsDistance = '';
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
@@ -59,10 +63,8 @@
       }
     }
     function showPosition(position) {
-
       
       timestamp = position.timestamp;
-
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
       altitude = position.coords.altitude;
@@ -72,9 +74,18 @@
       speedFPS = position.coords.speed * 3.28084;
       heading = position.coords.heading;
       
+      if (locationHistory.length > 0) {
+        previousLat = locationHistory[locationHistory.length-1]["coords"]["latitude"]
+        previousLong = locationHistory[locationHistory.length-1]["coords"]["longitude"]
+        previousTime = locationHistory[locationHistory.length-1]["timestamp"]
+        previousLatLong = [{"Prev-Lat": previousLat, "Prev-Long" : previousLong, "Prev-Timestamp": previousTime}]
+        currentLatLong = [{"Cur-Lat": latitude, "Cur-Long" : longitude, "Cur-Timestamp": timestamp}]
+        coordsDistance = calcCrow(previousLat, previousLong, latitude, longitude)
+        console.log(previousLatLong)
+      
+    }
       
       locationHistory.push(position)
-      console.log(locationHistory);
       log.push({
           "timestamp": timestamp,
           "latitude": latitude,
@@ -95,9 +106,9 @@
         
           timed.insertAdjacentHTML('afterEnd',`<tr class="timestamp" timestamp=` +timestamp+ `">` + 
           `<td class="lat">` + latitude + `</td>
-          <td class="long">` + longitude + `</td>
-          <td class="timestamp" timestamp="` + timestamp + `">` + d.toLocaleString() + `</td>` +
-          `</tr>`
+          <td class="long">` + longitude + `</td> 
+          <td class="distance">` + coordsDistance + `</td>
+          <td class="timestamp"><div><span class="date">` + d.toLocaleDateString() + '</span><br>' + d.toLocaleTimeString() + '</td></tr>'
         )
 
     }
