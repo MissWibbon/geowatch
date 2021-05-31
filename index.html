@@ -18,7 +18,7 @@
         let altitudeAccuracy = '';
         let speed = '';
         let heading = '';
-        function getLocation() {
+        function getLocation(location) {
           if (navigator.geolocation) {
             navigator.geolocation.watchPosition(showPosition);
             latitude = location.coords.latitude;
