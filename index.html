@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="demo"></div>
+    <script>
+        var x = document.getElementById("demo");
+        let latitude = '';
+        let longitude = '';
+        let altitude = '';
+        let accuracy = '';
+        let altitudeAccuracy = '';
+        let speed = '';
+        let heading = '';
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(showPosition);
+            latitude = location.coords.latitude;
+            longitude = location.coords.longitude;
+            altitude = location.coords.altitude;
+            accuracy = location.coords.accuracy;
+            altitudeAccuracy = location.coords.altitudeAccuracy;
+            speed = location.coords.speed;
+            heading = location.coords.heading;
+          } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
+        function showPosition(position) {
+          x.innerHTML = `<b>Latitude:</b> ` + position.coords.latitude +
+          "<br>Longitude: " + position.coords.longitude +
+          "<br>Altitude: " + position.coords.altitude +
+          "<br>Accuracy: " + position.coords.accuracy +
+          "<br>Speed: " + position.coords.speed +
+          "<br>Heading: " + position.coords.heading;
+        }
+        getLocation()
+        </script>
+</body>
+</html>
