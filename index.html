@@ -38,8 +38,8 @@
           "<b><br>Longitude:</b> " + longitude +
           "<b><br>Altitude:</b> " + altitude +
           "<b><br>Accuracy:</b> " + accuracy +
-          "<b><br>Speed Meters per second:</b> " + speedMPS +
-          "<b><br>Speed Feet per second:</b> " + speedFPS +
+          "<b><br>Speed - meters per second:</b> " + speedMPS.toFixed(2) +
+          "<b><br>Speed - feet per second:</b> " + speedFPS.toFixed(2) +
           "<b><br>Heading:</b> " + heading;
         }
         getLocation({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true })
