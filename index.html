@@ -24,6 +24,12 @@
     span.date {
       font-size: 10px;
     }
+    #timerContainer {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    .timer {padding: .25rem;}
 
   </style>
 </head>
@@ -114,8 +120,8 @@
           "speed": speed
       })
 
-      x.innerHTML = `<b>Latitude:</b> ` + Math.round(latitude * 10) / 10 +
-        "<div><b>Longitude:</b> " + Math.round(longitude * 10) / 10 +
+      x.innerHTML = `<b>Latitude:</b> ` + latitude +
+        "<div><b>Longitude:</b> " + longitude +
         "</div><div><b>Altitude:</b> " + altitude +
         "</div><div><b>Accuracy:</b> " + accuracy +
         "</div><div><b>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
