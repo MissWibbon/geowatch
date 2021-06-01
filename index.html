@@ -137,15 +137,17 @@
       distanceGoal.addEventListener('change', (event) => {
         goal.metric = metricGoal.value,
         goal.distance = distanceGoal.value + mkm.value
+        $('#goalDistance')[0].innerHTML = goal.distance
         
         console.log(goal)
       });
 
       timeGoal.addEventListener('change', (event) => {
-        goal = {
-          "metric": metricGoal.value,
-          "time": timeGoal.value + timeSet.value
-        }
+        goal.metric = metricGoal.value,
+        goal.time = timeGoal.value + timeSet.value
+        $('#goalDistance')[0].innerHTML = goal.time
+
+
         console.log(goal)
 
       });
@@ -184,7 +186,7 @@
         distanceTraveled =  totalDistance.reduce(add,0) 
         milesTraveled = distanceTraveled / 1.609;
         console.log(totalDistance)
-        if (distanceTraveled > distanceGoal.value) {
+        if (distanceTraveled > distanceGoal.value && distanceGoal.value != '') {
           alert("congratulations")
         }
     }
@@ -204,6 +206,7 @@
         "</div><div><b>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
         "</div><div><b>Speed - feet per second:</b> " + Math.round(speedFPS * 10) / 10 +
         "</div><div><b>Heading:</b> " + heading + 
+          "</div><div><b>Goal:</b> <span id='goalDistance'></span>"
         "</div><div><b>Distance:</b> " + distanceTraveled.toFixed(2) + " kilometers, or " + milesTraveled.toFixed(2) + " miles</div>";
 
         var d = new Date(timestamp);
