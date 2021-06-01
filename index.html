@@ -171,6 +171,7 @@
       speedMPS = position.coords.speed;
       speedFPS = position.coords.speed * 3.28084;
       heading = position.coords.heading;
+
       
       if (locationHistory.length > 0) {
         previousLat = locationHistory[locationHistory.length-1]["coords"]["latitude"]
@@ -208,6 +209,7 @@
         "</div><div><b>Heading:</b> " + heading + 
           "</div><div><b>Goal:</b> <span id='goalDistance'></span>"
         "</div><div><b>Distance:</b> " + distanceTraveled.toFixed(2) + " kilometers, or " + milesTraveled.toFixed(2) + " miles</div>";
+        $('#goalDistance')[0].innerHTML = goal.time
 
         var d = new Date(timestamp);
 
