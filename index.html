@@ -57,6 +57,7 @@
     let coordsDistance = '';
     let totalDistance = [];
     let distanceTraveled = 0;
+    let milesTraveled = 0;
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
@@ -87,9 +88,9 @@
         function add(accumulator, a) {
           return accumulator + a;
         } 
-        distanceTraveled = totalDistance.reduce(add,0)
+        distanceTraveled =  Math.round(totalDistance.reduce(add,0) * 10) / 10     
+        milesTraveled = distanceTraveled / 1.609;
         console.log(totalDistance)
-      
     }
       
       locationHistory.push(position)
@@ -107,7 +108,7 @@
         "</div><div><b>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
         "</div><div><b>Speed - feet per second:</b> " + Math.round(speedFPS * 10) / 10 +
         "</div><div><b>Heading:</b> " + heading + 
-        "</div><div><b>Distance:</b> " + distanceTraveled + "</div>";
+        "</div><div><b>Distance:</b> " + Math.round(distanceTraveled * 10) / 10 + " kilometers, or " + Math.round(milesTraveled * 10) / 10 + " miles</div>";
 
         var d = new Date(timestamp);
 
