@@ -39,6 +39,7 @@
       height: 300px;
       overflow: scroll;
     }
+    .time-form, .distance-form {display: none;}
 
   </style>
 </head>
@@ -46,6 +47,29 @@
 <body>
 
   <div id="demo"></div>
+  <div class="challengeForm">
+    <form action="/challenge_race.php">
+      <label for="metric" title="metric">Distance or time based race?</label>
+      <select id="metric" name="metric">
+        <option value="time">Time</option>
+        <option value="distance">Distance</option>
+      </select><br>
+      <label for="time" title="time">How long do you want to race?</label>
+      <input type="number" id="distanceAmount" name="points" step=".1" class="distance-form">
+      <select id="mkm" name="distance" class="distance-form">
+        <option value="miles">Miles</option>
+        <option value="kilometers">Kilometers</option>
+      </select><br>
+      <input type="number" id="timeAmount" name="points" step="1" class="time-form">
+      <select id="time" name="time" class="time-form">
+        <option value="hours">Hours</option>
+        <option value="minutes">Minutes</option>
+        <option value="seconds">Seconds</option>
+      </select>
+      <input type="submit">
+
+    </form>
+  </div>
 
 <div id="timerContainer">
   <div class="timer" onclick="startTimer()">Start Timer!</div>
@@ -93,6 +117,40 @@
     let totalDistance = [];
     let distanceTraveled = 0;
     let milesTraveled = 0;
+    let goal = [];
+
+      const metricGoal = document.querySelector('#metric');
+      const distanceGoal = document.querySelector('#distanceAmount');
+      const timeGoal = document.querySelector('#timeAmount');
+      const mkm = document.querySelector('#mkm');
+      const timeSet = document.querySelector('#time');
+
+      metricGoal.addEventListener('change', (event) => {
+        if (event.target.value === "time") {
+          $('.time-form').show()
+          $('.distance-form').hide()
+        } else if (event.target.value ==="distance") {
+          $('.distance-form').show()
+          $('.time-form').hide()
+        }
+      });
+      distanceGoal.addEventListener('change', (event) => {
+        goal.metric = metricGoal.value,
+        goal.distance = distanceGoal.value + mkm.value
+        
+        console.log(goal)
+      });
+
+      timeGoal.addEventListener('change', (event) => {
+        goal = {
+          "metric": metricGoal.value,
+          "time": timeGoal.value + timeSet.value
+        }
+        console.log(goal)
+
+      });
+
+
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
@@ -126,6 +184,9 @@
         distanceTraveled =  totalDistance.reduce(add,0) 
         milesTraveled = distanceTraveled / 1.609;
         console.log(totalDistance)
+        if (distanceTraveled < distanceGoal) {
+          alert("congratulations")
+        }
     }
       
       locationHistory.push(position)
