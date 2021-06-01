@@ -19,9 +19,6 @@ function startTimer(){
 timerDisplay.style.background = "#FF0000";
     timerDisplay.style.cursor = "auto";
     timerDisplay.style.color = "yellow";
-    timerDisplay.style.position = "absolute";
-    timerDisplay.style.top = "0";
-    timerDisplay.style.right = "0";
     startTimerButton.classList.add('lighter');
     pauseTimerButton.classList.remove('lighter');
     startTimerButton.style.cursor = "auto";
