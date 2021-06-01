@@ -39,15 +39,18 @@
   <div id="demo"></div>
 
 <div id="timerContainer">
-<div class="timer" onclick="startTimer()">Start Timer!</div>
-<div class="startTimer reset" onclick="startTimer()" >
-    <i class="fas fa-play"></i>
-  </div>
-<div class="pauseTimer reset" onclick="pauseTimer()" >
-    <i class="fas fa-pause"></i>
-  </div>
-<div class="resetTimer reset" onclick="resetTimer()">Reset</div>
-</div>  <table id="log">
+  <div class="timer" onclick="startTimer()">Start Timer!</div>
+    <div class="timerControls">
+      <div class="startTimer reset" onclick="startTimer()" >
+          <i class="fas fa-play"></i>
+        </div>
+      <div class="pauseTimer reset" onclick="pauseTimer()" >
+          <i class="fas fa-pause"></i>
+        </div>
+      <div class="resetTimer reset" onclick="resetTimer()">Reset</div>
+    </div>
+  </div>  
+  <table id="log">
     <thead>
       <tr class="timestamp">
         <th>Lat</th>
