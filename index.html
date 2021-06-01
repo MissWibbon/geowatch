@@ -207,9 +207,8 @@
         "</div><div><b>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
         "</div><div><b>Speed - feet per second:</b> " + Math.round(speedFPS * 10) / 10 +
         "</div><div><b>Heading:</b> " + heading + 
-          "</div><div><b>Goal:</b> <span id='goalDistance'></span>"
+          "</div><div><b>Goal:</b> <span id='goalDistance'>" + goal.time +  "</span>"
         "</div><div><b>Distance:</b> " + distanceTraveled.toFixed(2) + " kilometers, or " + milesTraveled.toFixed(2) + " miles</div>";
-        $('#goalDistance')[0].innerHTML = goal.time
 
         var d = new Date(timestamp);
 
