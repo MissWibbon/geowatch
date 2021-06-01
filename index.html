@@ -55,6 +55,8 @@
     let previousLatLong = [];
     let log = []
     let coordsDistance = '';
+    let totalDistance = [];
+    let distanceTraveled = 0;
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
@@ -81,7 +83,12 @@
         previousLatLong = [{"Prev-Lat": previousLat, "Prev-Long" : previousLong, "Prev-Timestamp": previousTime}]
         currentLatLong = [{"Cur-Lat": latitude, "Cur-Long" : longitude, "Cur-Timestamp": timestamp}]
         coordsDistance = calcCrow(previousLat, previousLong, latitude, longitude)
-        console.log(previousLatLong)
+        totalDistance.push(coordsDistance)
+        function add(accumulator, a) {
+          return accumulator + a;
+        } 
+        distanceTraveled = totalDistance.reduce(add,0)
+        console.log(totalDistance)
       
     }
       
@@ -99,7 +106,8 @@
         "</div><div><b>Accuracy:</b> " + accuracy +
         "</div><div><b>Speed - meters per second:</b> " + Math.round(speedMPS * 10) / 10 +
         "</div><div><b>Speed - feet per second:</b> " + Math.round(speedFPS * 10) / 10 +
-        "</div><div><b>Heading:</b> " + heading + "</div>";
+        "</div><div><b>Heading:</b> " + heading + 
+        "</div><div><b>Distance:</b> " + distanceTraveled + "</div>";
 
         var d = new Date(timestamp);
 
